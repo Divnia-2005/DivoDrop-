@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to DivoDrop Hydration Guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Video Background */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #04767a;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        header {
+            background: rgba(0, 122, 204, 0.8);
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        header h1 {
+            color: #202b6bde;
+        }
+        p1 {
+            color: #043941de;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section {
+            margin: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            width: 80%;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-mode section {
+            background: rgba(40, 40, 40, 0.9);
+            color: #e0e0e0;
+        }
+        button {
+            background: #007acc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #005f99;
+        }
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #count {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 20px;
+            background: #007acc;
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+
+        /* History Log */
+        #historyLog {
+            margin-top: 20px;
+            text-align: left;
+            max-height: 100px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+                       border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+        .dark-mode-toggle img {
+            width: 54px; /* Adjusted size to fit the circle */
+            height: 44px;
+            filter: invert(1);
+            transition: transform 0.3s;
+        }
+        .dark-mode-toggle:hover {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .dark-mode-toggle:hover img {
+            transform: scale(1.1); /* Slight zoom effect on hover */
+        }
+
+        /* Home Button */
+        .home-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            border-radius: 50%;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+        .home-button img {
+            width: 70%;
+            height: auto;
+        }
+        .home-button:hover {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007acc;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+            font-size: 24px;
+        }
+        .back-to-top:hover {
+            background: #005f99;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="video-bg">
+        <source src="background.webm" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle" id="darkModeToggle">
+        <img src="theme.png" alt="Dark Mode">
+    </div>
+
+    <a href="index.html" class="home-button">
+        <img src="home.png" alt="Home">
+    </a>
+
+    <header>
+        <h1>Stay Hydrated, Stay Healthy</h1>
+        <p1>Stay refreshed and healthy by understanding the importance of proper hydration.</p1>
+        <nav>
+            <ul>
+                <li><a href="#calculator">Water Intake Calculator</a></li>
+                <li><a href="#tips">Hydration Tips</a></li>
+                <li><a href="#tracker">Daily Tracker</a></li>
+                <li><a href="#reminder">Hydration Reminder</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="calculator">
+        <h2>Water Intake Calculator</h2>
+        <label for="weight">Enter your weight (kg): </label>
+        <input type="number" id="weight" placeholder="Enter weight">
+        <button id="calculate">Calculate</button>
+        <p id="result"></p>
+    </section>
+
+    <section id="tips">
+        <h2>Hydration Tips</h2>
+        <ul>
+            <p>Drink at least 8 glasses of water daily.</p>
+            <p>Carry a reusable water bottle.</p>
+            <p>Eat water-rich foods like fruits and vegetables.</p>
+            <p>Set reminders to drink water.</p>
+        </ul>
+    </section>
+
+    <section id="tracker">
+        <h2>Daily Water Intake Tracker</h2>
+        <button id="addGlass">Add a Glass</button>
+        <p>Glasses drank today: <span id="count">0</span></p>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div id="historyLog">
+            <h3>History</h3>
+            <ul id="historyList"></ul>
+        </div>
+    </section>
+
+    <section id="reminder">
+        <h2>Set Hydration Reminder</h2>
+        <label for="interval">Remind me every (minutes): </label>
+        <input type="number" id="interval" placeholder="Enter minutes">
+        <button id="setReminder">Set Reminder</button>
+        <p id="reminderStatus"></p>
+    </section>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">⮝</button>
+
+    <script>
+        // Water Intake Calculator
+        $('#calculate').click(function() {
+            let weight = $('#weight').val();
+            if (weight) {
+                let intake = weight * 0.033; // Formula: 33ml per kg
+                $('#result').text(`Recommended water intake: ${intake.toFixed(2)} liters per day`);
+            } else {
+                alert("Please enter your weight.");
+            }
+        });
+
+        // Daily Water Tracker
+        let glassCount = 0;
+        const dailyGoal = 8; // Daily goal of 8 glasses
+        $('#addGlass').click(function() {
+            if (glassCount < dailyGoal) {
+                glassCount++;
+                $('#count').text(glassCount);
+                updateProgressBar();
+                logHistory(`Drank a glass at ${new Date().toLocaleTimeString()}`);
+            } else {
+                alert("You've reached your daily goal! 🎉");
+            }
+        });
+
+        // Update Progress Bar
+        function updateProgressBar() {
+            const progress = (glassCount / dailyGoal) * 100;
+            $('#progressBar').css('width', `${progress}%`);
+        }
+
+        // Log History
+        function logHistory(message) {
+            const historyList = $('#historyList');
+            historyList.prepend(`<li>${message}</li>`);
+        }
+
+        // Hydration Reminder
+        let reminderInterval;
+        $('#setReminder').click(function() {
+            let minutes = $('#interval').val();
+            if (minutes && minutes > 0) {
+                clearInterval(reminderInterval);
+                reminderInterval = setInterval(() => {
+                    alert("Time to drink water! 💧");
+                }, minutes * 60000);
+                $('#reminderStatus').text(`Reminder set every ${minutes} minutes`);
+            } else {
+                alert("Enter a valid time in minutes.");
+            }
+        });
+
+        // Dark Mode Toggle
+        $('#darkModeToggle').click(function() {
+            $('body').toggleClass('dark-mode');
+        });
+
+        // Show/hide Back to Top button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 100) {
+                $('#backToTop').fadeIn();
+            } else {
+                $('#backToTop').fadeOut();
+            }
+        });
+
+        // Scroll to top
+        $('#backToTop').click(function() {
+            $('html, body').animate({scrollTop: 0}, 600);
+        });
+    </script>
+</body>
+</html>
